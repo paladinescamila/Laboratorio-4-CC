@@ -5,7 +5,6 @@ import numpy as np
 import sympy as sym
 import matplotlib.pyplot as plt
 
-x_sym = sym.Symbol("x")
 x = sym.Symbol("x")
 
 
