@@ -53,7 +53,7 @@ def segunda_derivada(f, h):
 
 
 # Integral por Regla del Rectángulo
-def rectangulo(f, a, b):
+def punto_medio(f, a, b):
     """
     Entrada: función f(x) y dos enteros a y b.
     Salida: integral definida de f(x) con límites a y b.
@@ -202,11 +202,11 @@ def ejemplo_derivada(funcion, hs, min_x, max_x, mostrar):
 # Pintar ejemplo de integral con cada método
 def ejemplo_integral(funcion, min_x, max_x, mostrar):
     analitica = sym.integrate(funcion, (x, min_x, max_x))
-    integral_rectangulo = rectangulo(funcion, min_x, max_x)
+    integral_punto_medio = punto_medio(funcion, min_x, max_x)
     integral_trapezoide = trapezoide(funcion, min_x, max_x)
     integral_simpson = simpson(funcion, min_x, max_x)
     print(analitica)
-    print(integral_rectangulo)
+    print(integral_punto_medio)
     print(integral_trapezoide)
     print(integral_simpson)
 
@@ -234,8 +234,8 @@ def main():
     print("INTEGRACIÓN")
 
     print("EJEMPLO 1")
-    f = np.e**(-x**2)
-    ejemplo_integral(f, 0, 1, True)
+    funcion = np.e**(-x**2)
+    ejemplo_integral(funcion, 0, 1, True)
 
 
 main()
