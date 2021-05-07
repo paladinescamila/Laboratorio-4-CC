@@ -41,7 +41,7 @@ def diferencia_centrada(f, h):
     return derivada
 
 
-# Segunda derivada
+# Segunda derivada (CREO QUE NO ERA NECESARIO)
 def segunda_derivada(f, h):
     """
     Entrada: una función f(x) y un entero h.
@@ -52,14 +52,68 @@ def segunda_derivada(f, h):
     return derivada
 
 
+# Integral por Regla del Rectángulo
+def rectangulo(f, a, b):
+    """
+    Entrada: función f(x) y dos enteros a y b.
+    Salida: integral definida de f(x) con límites a y b.
+    """
+
+    n = 1000
+    xi = [i for i in np.linspace(a, b, n)]
+    f = sym.lambdify(x, f)
+
+    integral = 0
+    for i in range(n):
+        integral += (xi[i] - xi[i-1]) * f((xi[i-1] + xi[i]) / 2)
+
+    return integral
+
+
+# Integral por Regla del Trapezoide
+def trapezoide(f, a, b):
+    """
+    Entrada: función f(x) y dos enteros a y b.
+    Salida: integral definida de f(x) con límites a y b.
+    """
+
+    n = 1000
+    xi = [i for i in np.linspace(a, b, n)]
+    f = sym.lambdify(x, f)
+
+    integral = 0
+    for i in range(n):
+        integral += (xi[i] - xi[i-1]) * (f(xi[i-1]) + f(xi[i]))
+
+    return integral / 2
+
+
+# Integral por Regla del Simpson
+def simpson(f, a, b):
+    """
+    Entrada: función f(x) y dos enteros a y b.
+    Salida: integral definida de f(x) con límites a y b.
+    """
+
+    n = 1000
+    xi = [i for i in np.linspace(a, b, n)]
+    f = sym.lambdify(x, f)
+
+    integral = 0
+    for i in range(n):
+        integral += (xi[i] - xi[i-1]) * (f(xi[i-1]) + 4*f((xi[i-1]+xi[i])/2) + f(xi[i]))
+
+    return integral / 6
+
+
 # Pintar ejemplo de derivada con cada método
-def ejemplo_derivada(funcion, hs, min_x, min_y, mostrar):
+def ejemplo_derivada(funcion, hs, min_x, max_x, mostrar):
     # FALTA LA SEGUNDA DERIVADA
 
     colores = ["purple", "red", "green", "orange", "gray"]
     metodos = ["Hacia Adelante", "Hacia Atrás", "Centrada"]
 
-    x_funcion = np.linspace(min_x, min_y, 1000)
+    x_funcion = np.linspace(min_x, max_x, 1000)
     f_funcion = sym.lambdify(x, funcion)
     y_funcion = [f_funcion(i) for i in x_funcion]
     
@@ -82,11 +136,11 @@ def ejemplo_derivada(funcion, hs, min_x, min_y, mostrar):
             plt.plot(x_funcion, y_funcion, color="black", label="f(x)")
             plt.plot(x_funcion, y_analitica, color="blue", label="f'(x)")
             
-            print("---------------------------------------------")
+            print("----------------------------------------------")
             print(" DIFERENCIAS FINITAS {}".format(metodos[i].upper()))
-            print("---------------------------------------------")
+            print("----------------------------------------------")
             print(" h\tTiempo\tError (Prom)\tError (Desv)\tf'(x)")
-            print("---------------------------------------------")
+            print("----------------------------------------------")
 
 
         for j in range(len(hs)):
@@ -121,7 +175,7 @@ def ejemplo_derivada(funcion, hs, min_x, min_y, mostrar):
 
         if (mostrar):
 
-            print("---------------------------------------------\n")
+            print("----------------------------------------------\n")
             plt.legend()
             plt.xlabel('x')
             plt.ylabel('y')
@@ -145,6 +199,18 @@ def ejemplo_derivada(funcion, hs, min_x, min_y, mostrar):
     print()
 
 
+# Pintar ejemplo de integral con cada método
+def ejemplo_integral(funcion, min_x, max_x, mostrar):
+    analitica = sym.integrate(funcion, (x, min_x, max_x))
+    integral_rectangulo = rectangulo(funcion, min_x, max_x)
+    integral_trapezoide = trapezoide(funcion, min_x, max_x)
+    integral_simpson = simpson(funcion, min_x, max_x)
+    print(analitica)
+    print(integral_rectangulo)
+    print(integral_trapezoide)
+    print(integral_simpson)
+
+
 # EJEMPLOS DE PRUEBA (También se encuentran en el informe)
 def main():
 
@@ -152,18 +218,24 @@ def main():
 
     print("EJEMPLO 1")
     funcion = 5*x**4 + 10*x**3 + 15*x**2 + x + 7
-    hs = [1, 0.2, 0.03]
+    hs = [1, 0.3, 0.05, 0.007]
     ejemplo_derivada(funcion, hs, -1, 1, True)
 
     print("EJEMPLO 2")
     funcion = 3**(x + 2)
-    hs = [1, 0.1, 0.01]
+    hs = [2, 0.4, 0.06, 0.008]
     ejemplo_derivada(funcion, hs, -0.5, 0.5, True)
 
     print("EJEMPLO 3")
     funcion = sym.sin(2*x**3)
-    hs = [1, 0.1, 0.01]
+    hs = [1, 0.2, 0.03, 0.004]
     ejemplo_derivada(funcion, hs, -1, 1, True)
+
+    print("INTEGRACIÓN")
+
+    print("EJEMPLO 1")
+    f = np.e**(-x**2)
+    ejemplo_integral(f, 0, 1, True)
 
 
 main()
