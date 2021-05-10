@@ -183,7 +183,7 @@ def ejemplo_derivada(funcion, hs, min_x, max_x, mostrar):
             plt.show()
     
     print()
-    plt.title("Métodos de Diferenciación")
+    plt.title("Métodos de Diferenciación con h = "+str(hs[0]))
     plt.plot(x_funcion, y_funcion, color="black", label="f(x)")
     plt.plot(x_funcion, y_analitica, color="blue", label="f'(x)")
 
@@ -205,10 +205,11 @@ def ejemplo_integral(funcion, min_x, max_x, mostrar):
     integral_punto_medio = punto_medio(funcion, min_x, max_x)
     integral_trapezoide = trapezoide(funcion, min_x, max_x)
     integral_simpson = simpson(funcion, min_x, max_x)
-    print(analitica)
-    print(integral_punto_medio)
-    print(integral_trapezoide)
-    print(integral_simpson)
+    print("f(x) = {}".format(funcion))
+    print("Analítica = {}".format(analitica))
+    print("Punto medio = {}".format(integral_punto_medio))
+    print("Trapezoide = {}".format(integral_trapezoide))
+    print("Simpson = {}".format(integral_simpson))
 
 
 # EJEMPLOS DE PRUEBA (También se encuentran en el informe)
@@ -236,6 +237,10 @@ def main():
     print("EJEMPLO 1")
     funcion = np.e**(-x**2)
     ejemplo_integral(funcion, 0, 1, True)
+
+    print("EJEMPLO 2")
+    funcion = x**2
+    ejemplo_integral(funcion, -10, 20, True)
 
 
 main()
