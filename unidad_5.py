@@ -53,13 +53,12 @@ def segunda_derivada(f, h):
 
 
 # Integral por Regla del Rectángulo
-def punto_medio(f, a, b):
+def punto_medio(f, a, b, n):
     """
-    Entrada: función f(x) y dos enteros a y b.
-    Salida: integral definida de f(x) con límites a y b.
+    Entrada: función f(x), dos reales a y b, y un entero n.
+    Salida: integral definida de f(x) con límites a y b con n paneles.
     """
 
-    n = 1000
     xi = [i for i in np.linspace(a, b, n)]
     f = sym.lambdify(x, f)
 
@@ -71,13 +70,12 @@ def punto_medio(f, a, b):
 
 
 # Integral por Regla del Trapezoide
-def trapezoide(f, a, b):
+def trapezoide(f, a, b, n):
     """
-    Entrada: función f(x) y dos enteros a y b.
-    Salida: integral definida de f(x) con límites a y b.
+    Entrada: función f(x), dos reales a y b, y un entero n.
+    Salida: integral definida de f(x) con límites a y b con n paneles.
     """
 
-    n = 1000
     xi = [i for i in np.linspace(a, b, n)]
     f = sym.lambdify(x, f)
 
@@ -89,13 +87,12 @@ def trapezoide(f, a, b):
 
 
 # Integral por Regla del Simpson
-def simpson(f, a, b):
+def simpson(f, a, b, n):
     """
-    Entrada: función f(x) y dos enteros a y b.
-    Salida: integral definida de f(x) con límites a y b.
+    Entrada: función f(x), dos reales a y b, y un entero n.
+    Salida: integral definida de f(x) con límites a y b con n paneles.
     """
 
-    n = 1000
     xi = [i for i in np.linspace(a, b, n)]
     f = sym.lambdify(x, f)
 
@@ -201,15 +198,50 @@ def ejemplo_derivada(funcion, hs, min_x, max_x, mostrar):
 
 # Pintar ejemplo de integral con cada método
 def ejemplo_integral(funcion, min_x, max_x, mostrar):
-    analitica = sym.integrate(funcion, (x, min_x, max_x))
-    integral_punto_medio = punto_medio(funcion, min_x, max_x)
-    integral_trapezoide = trapezoide(funcion, min_x, max_x)
-    integral_simpson = simpson(funcion, min_x, max_x)
-    print("f(x) = {}".format(funcion))
-    print("Analítica = {}".format(analitica))
-    print("Punto medio = {}".format(integral_punto_medio))
-    print("Trapezoide = {}".format(integral_trapezoide))
-    print("Simpson = {}".format(integral_simpson))
+
+    analitica = float(sym.integrate(funcion, (x, min_x, max_x)))
+
+    inicio = time.time()
+    integral_punto_medio = punto_medio(funcion, min_x, max_x, 1000)
+    tiempo_m = time.time() - inicio
+    error_m = np.abs(analitica - integral_punto_medio)
+
+    inicio = time.time()
+    integral_trapezoide = trapezoide(funcion, min_x, max_x, 1000)
+    tiempo_t = time.time() - inicio
+    error_t = np.abs(analitica - integral_trapezoide)
+
+    inicio = time.time()
+    integral_simpson = simpson(funcion, min_x, max_x, 1000)
+    tiempo_s = time.time() - inicio
+    error_s = np.abs(analitica - integral_simpson)
+
+    if (mostrar):
+
+        print("f(x) = {}".format(funcion))
+        print("∫f(x)dx = {}".format(analitica))
+        print("---------------------------------------------------------------")
+        print("                       INTEGRAL DEFINIDA                       ")
+        print("---------------------------------------------------------------")
+        print(" Método\t\tTiempo\t\tError\t\t∫f(x)dx")
+        print("---------------------------------------------------------------")
+        print(" Punto medio\t{:.5f}\t\t{:.5f}\t\t{:.10f}".format(tiempo_m, error_m, integral_punto_medio))
+        print(" Trapezoide\t{:.5f}\t\t{:.5f}\t\t{:.10f}".format(tiempo_t, error_t, integral_trapezoide))
+        print(" Simpson\t{:.5f}\t\t{:.5f}\t\t{:.10f}".format(tiempo_s, error_s, integral_simpson))
+        print("---------------------------------------------------------------")
+
+        f = sym.lambdify(x, funcion)
+        t = np.linspace(min_x, max_x, 1000)
+        plt.title("Integral definida")
+        plt.xlabel("x")
+        plt.ylabel("y")
+        plt.plot(t, f(t), color="black")
+        plt.axvline(x=min_x, color='b')
+        plt.axvline(x=max_x, color='b')
+        plt.fill_between(t, f(t), where=[(i > min_x) and (i < max_x) for i in t], color="lightblue")
+        plt.show()
+
+        print()
 
 
 # EJEMPLOS DE PRUEBA (También se encuentran en el informe)
@@ -235,12 +267,16 @@ def main():
     print("INTEGRACIÓN")
 
     print("EJEMPLO 1")
-    funcion = np.e**(-x**2)
-    ejemplo_integral(funcion, 0, 1, True)
+    funcion = 3*sym.cos(x)
+    ejemplo_integral(funcion, -5, 5, True)
 
     print("EJEMPLO 2")
-    funcion = x**2
+    funcion = x**2 + 7*x**3 + 2*x + 1
     ejemplo_integral(funcion, -10, 20, True)
+
+    print("EJEMPLO 3")
+    funcion = 2**(-x+5)
+    ejemplo_integral(funcion, -20, -10, True)
 
 
 main()
