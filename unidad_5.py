@@ -315,11 +315,11 @@ def main():
     ejemplo_integral(funcion, 3000, -18.5, -10, True)
 
 
-main()
+# main()
 
 
-# #########################################################################################3
-# FUNCIONES AUXILIARES
+# #############################################################################
+# FUNCIONES AUXILIARES PARA EL ANÁLISIS
 
 def graficar(x, y, color, title, xlabel, ylabel, label):
 
@@ -347,48 +347,3 @@ def imprimir(titulo, x, y, columnas):
         print(" {}\t{:.5f}\t{:.5f}\t{:.5f}".format(x[i], y1, y2, y3))
             
     print("------------------------------------------------------")
-
-
-# #########################################################################################3
-# ANÁLISIS DE COMPLEJIDAD Y ERRROR DE LAS DERIVADAS
-
-def analisis_derivada(funcion, a, b):
-
-    print("f(x) = {}".format(funcion))
-
-    metodos = ['Adelante', 'Atrás', 'Centrada']
-    colores = ["blue", "red", "green"]
-
-    hs = [round(0.1*(i+1), 1) for i in range(10)]
-    promedio = [[] for _ in range(3)]
-    desviacion = [[] for _ in range(3)]
-    tiempo = [[] for _ in range(3)]
-
-    for i in hs:
-        analitica, derivadas, tiempos, promedios, desviaciones = ejemplo_derivada(funcion, [i], a, b, False)
-        for j in range(3):
-            promedio[j].append(promedios[j][0])
-            desviacion[j].append(desviaciones[j][0])
-            tiempo[j].append(tiempos[j][0])
-
-    imprimir("Error (Promedio)", hs, promedio, ["h"] + metodos)
-    imprimir("Error (Desviación)", hs, desviacion, ["h"] + metodos)
-    graficar(hs, promedio, colores, "Error", "h", "Error", metodos)
-
-    imprimir("Tiempo", hs, tiempo, ["h"] + metodos)
-    graficar(hs, tiempo, colores, "Tiempo", "n", "Tiempo", metodos)
-
-
-print("EJEMPLO 1")
-funcion = 2*x**4 + 3*x**2 + x
-analisis_derivada(funcion, 0, 3)
-
-print("EJEMPLO 2")
-funcion = 3**(x + 2) + x
-hs = [1, 2, 3, 4]
-analisis_derivada(funcion, 7, 10)
-
-print("EJEMPLO 3")
-funcion = sym.sin(2*x**3)
-hs = [0.1, 0.2, 0.3, 0.4]
-analisis_derivada(funcion, 1, 2)
