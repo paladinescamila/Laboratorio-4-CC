@@ -316,3 +316,34 @@ def main():
 
 
 main()
+
+
+# ----------------------------------------------------------------------------
+# FUNCIONES AUXILIARES
+
+def graficar(x, y, color, title, xlabel, ylabel, label):
+
+    for i in range(len(y)): 
+        plt.plot(x, y[i], color=color[i], label=label[i], marker="o")
+
+    plt.title(title)
+    plt.xlabel(xlabel)
+    plt.ylabel(ylabel)
+    plt.legend()
+    plt.grid()
+    plt.show()
+
+
+def imprimir(titulo, x, y, columnas):
+
+    print("------------------------------------------------------")
+    print(" " + titulo)
+    print("------------------------------------------------------")
+    print(" {}\t{}\t{}\t{}".format(columnas[0], columnas[1], columnas[2], columnas[3]))
+    print("------------------------------------------------------")
+
+    for i in range(len(x)):
+        y1, y2, y3 = y[0][i], y[1][i], y[2][i]
+        print(" {}\t{:.5f}\t{:.5f}\t{:.5f}".format(x[i], y1, y2, y3))
+            
+    print("------------------------------------------------------")
