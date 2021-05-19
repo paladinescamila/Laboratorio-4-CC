@@ -113,7 +113,7 @@ def ejemplo_derivada(funcion, hs, a, b, mostrar):
     """
 
     x_funcion = np.linspace(a, b, 1000)
-    
+
     analitica = sym.diff(funcion, x)
     f_analitica = sym.lambdify(x, analitica)
     y_analitica = [f_analitica(i) for i in x_funcion]
@@ -126,8 +126,7 @@ def ejemplo_derivada(funcion, hs, a, b, mostrar):
 
     if (mostrar):
         
-        print("f(x) = {}".format(funcion))
-        print("f'(x) = {}".format(analitica))
+        print("f(x) = {}\nf'(x) = {}".format(funcion, analitica))
         print("a = {}\nb = {}\nhs = {}".format(a, b, hs))
 
         t_metodos, p_metodos, d_metodos, f_metodos, y_metodos = [], [], [], [], []
@@ -167,8 +166,7 @@ def ejemplo_derivada(funcion, hs, a, b, mostrar):
             y_derivada = [f_derivada(k) for k in x_funcion]
 
             errores = [np.abs(y_derivada[k] - y_analitica[k]) for k in range(1000)]
-            promedio = np.mean(errores)
-            desviacion = np.std(errores)
+            promedio, desviacion = np.mean(errores), np.std(errores)
 
             if (j == 0 and mostrar):
                 t_metodos.append(tiempo)
@@ -181,7 +179,8 @@ def ejemplo_derivada(funcion, hs, a, b, mostrar):
             promedios[i][j], desviaciones[i][j] = promedio, desviacion
 
             if (mostrar):
-                print(" {}\t{:.4f}\t{:.10f}\t{:.10f}\t{}".format(hs[j], tiempo, promedio, desviacion, sym.expand(derivada)))
+                print(" {}\t{:.4f}\t{:.10f}\t{:.10f}\t{}"
+                .format(hs[j], tiempo, promedio, desviacion, sym.expand(derivada)))
                 # print("\t\t{} & {:.10f} & {:.10f} & {:.10f} \\\\".format(hs[j], tiempo, promedio, desviacion))
                 # print("\t\t{} & ${}$ \\\\".format(hs[j], sym.expand(derivada)))
                 # print("\t\t{} & {:.5f} & {:.3f} & {:.3f} & ${}$ \\\\".format(hs[j], tiempo, promedio, desviacion, sym.expand(derivada)))
@@ -207,7 +206,8 @@ def ejemplo_derivada(funcion, hs, a, b, mostrar):
         print(" Método\t\tTiempo\tError (Prom)\tError (Desv)\tf'(x)")
         print("-----------------------------------------------------")
         for i in range(3):
-            print(" {}\t{:.5f}\t{:.10f}\t{:.10f}\t{}".format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i], f_metodos[i]))
+            print(" {}\t{:.5f}\t{:.10f}\t{:.10f}\t{}"
+            .format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i], sym.expand(f_metodos[i])))
             # print("\t\t{} & {:.5f} & {:.5f} & {:.5f} \\\\".format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i]))
             # print("\t\t{} & ${}$ \\\\".format(metodos[i], sym.expand(f_metodos[i])))
             # print("\t\t{} & {:.5f} & {:.3f} & {:.3f} & ${}$ \\\\".format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i], sym.expand(f_metodos[i])))
@@ -234,29 +234,30 @@ def ejemplo_integral(funcion, n, a, b, mostrar):
     """
     
     analitica = float(sym.integrate(funcion, (x, a, b)))
-    integrales, tiempos, errores = [], [], []
+    integrales = [0 for _ in range(3)]
+    tiempos = [0 for _ in range(3)]
+    errores = [0 for _ in range(3)]
 
     inicio = time.time()
-    integrales.append(punto_medio(funcion, a, b, n))
-    tiempos.append(time.time() - inicio)
-    errores.append(np.abs(analitica - integrales[0]))
+    integrales[0] = punto_medio(funcion, a, b, n)
+    tiempos[0] = time.time() - inicio
+    errores[0] = np.abs(analitica - integrales[0])
 
     inicio = time.time()
-    integrales.append(trapezoide(funcion, a, b, n))
-    tiempos.append(time.time() - inicio)
-    errores.append(np.abs(analitica - integrales[1]))
+    integrales[1] = trapezoide(funcion, a, b, n)
+    tiempos[1] = time.time() - inicio
+    errores[1] = np.abs(analitica - integrales[1])
 
     inicio = time.time()
-    integrales.append(simpson(funcion, a, b, n))
-    tiempos.append(time.time() - inicio)
-    errores.append(np.abs(analitica - integrales[2]))
+    integrales[2] = simpson(funcion, a, b, n)
+    tiempos[2] = time.time() - inicio
+    errores[2] = np.abs(analitica - integrales[2])
 
     if (mostrar):
 
         metodos = ["Punto Medio", "Trapeziode", "Simpson"]
-        print("f(x) = {}".format(funcion))
+        print("f(x) = {}\n∫f(x)dx = {}".format(funcion, analitica))
         print("a = {}\nb = {}\nn = {}".format(a, b, n))
-        print("∫f(x)dx = {}".format(analitica))
 
         print("---------------------------------------------------")
         print("                INTEGRACIÓN NUMÉRICA               ")

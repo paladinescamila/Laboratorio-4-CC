@@ -14,10 +14,10 @@ def analisis_integral(funcion, a, b):
     tiempo = [[] for _ in range(3)]
 
     for i in range(10):
-        analitica, integrales, tiempos, errores = ejemplo_integral(funcion, (i+1)*1000, a, b, False)
+        _, _, t, e = ejemplo_integral(funcion, (i+1)*1000, a, b, False)
         for j in range(3):
-            error[j].append(errores[j])
-            tiempo[j].append(tiempos[j])
+            error[j].append(e[j])
+            tiempo[j].append(t[j])
 
     imprimir("Errores", ns, error, ["n"] + metodos)
     graficar(ns, error, colores, "Error", "n", "Error", metodos)
@@ -44,4 +44,4 @@ def main_integral():
     analisis_integral(funcion, -18.5, -10)
 
 
-main_integral()
+# main_integral()

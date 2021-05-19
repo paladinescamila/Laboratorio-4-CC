@@ -15,11 +15,11 @@ def analisis_derivada(funcion, a, b):
     tiempo = [[] for _ in range(3)]
 
     for i in hs:
-        analitica, derivadas, tiempos, promedios, desviaciones = ejemplo_derivada(funcion, [i], a, b, False)
+        _, _, t, p, d = ejemplo_derivada(funcion, [i], a, b, False)
         for j in range(3):
-            promedio[j].append(promedios[j][0])
-            desviacion[j].append(desviaciones[j][0])
-            tiempo[j].append(tiempos[j][0])
+            promedio[j].append(p[j][0])
+            desviacion[j].append(d[j][0])
+            tiempo[j].append(t[j][0])
 
     imprimir("Error (Promedio)", hs, promedio, ["h"] + metodos)
     imprimir("Error (Desviación)", hs, desviacion, ["h"] + metodos)
@@ -45,4 +45,4 @@ def main_derivada():
     analisis_derivada(funcion, 1, 2)
 
 
-main_derivada()
+# main_derivada()
