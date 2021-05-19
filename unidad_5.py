@@ -184,18 +184,19 @@ def ejemplo_derivada(funcion, hs, a, b, mostrar):
                 print(" {}\t{:.4f}\t{:.10f}\t{:.10f}\t{}".format(hs[j], tiempo, promedio, desviacion, sym.expand(derivada)))
                 # print("\t\t{} & {:.10f} & {:.10f} & {:.10f} \\\\".format(hs[j], tiempo, promedio, desviacion))
                 # print("\t\t{} & ${}$ \\\\".format(hs[j], sym.expand(derivada)))
+                # print("\t\t{} & {:.5f} & {:.3f} & {:.3f} & ${}$ \\\\".format(hs[j], tiempo, promedio, desviacion, sym.expand(derivada)))
                 plt.plot(x_funcion, y_derivada, color=colores[j], label="h = "+str(hs[j]), linewidth=2)
 
         if (mostrar):
 
-            print("----------------------------------------------\n")
+            print("----------------------------------------------\n")   
             plt.plot(x_funcion, y_analitica, color="black", label="Analítica")
             plt.legend()
             plt.xlabel('x')
             plt.ylabel('y')
             plt.grid()
             plt.show()
-    
+
     if (mostrar):
 
         print()
@@ -208,7 +209,8 @@ def ejemplo_derivada(funcion, hs, a, b, mostrar):
         for i in range(3):
             print(" {}\t{:.5f}\t{:.10f}\t{:.10f}\t{}".format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i], f_metodos[i]))
             # print("\t\t{} & {:.5f} & {:.5f} & {:.5f} \\\\".format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i]))
-            # print("\t\t{} & ${}$ \\\\".format(hs[j], f_metodos))
+            # print("\t\t{} & ${}$ \\\\".format(metodos[i], sym.expand(f_metodos[i])))
+            # print("\t\t{} & {:.5f} & {:.3f} & {:.3f} & ${}$ \\\\".format(metodos[i], t_metodos[i], p_metodos[i], d_metodos[i], sym.expand(f_metodos[i])))
             plt.plot(x_funcion, y_metodos[i], color=colores[i], label=str(metodos[i]), linewidth=2)
         print("-----------------------------------------------------")
         
@@ -264,6 +266,7 @@ def ejemplo_integral(funcion, n, a, b, mostrar):
 
         for i in range(3):
             print(" {}\t{:.5f}\t{:.5f}\t{}".format(metodos[i], tiempos[i], errores[i], integrales[i]))
+            # print(" {} & {:.5f} & {:.5f} & {} \\\\".format(metodos[i], tiempos[i], errores[i], integrales[i]))
 
         print("---------------------------------------------------\n")
 
@@ -283,7 +286,7 @@ def ejemplo_integral(funcion, n, a, b, mostrar):
 # EJEMPLOS DE PRUEBA (También se encuentran en el informe)
 def main():
 
-    print("DIFERENCIACIÓN")
+    # DIFERENCIACIÓN
 
     print("EJEMPLO 1")
     funcion = 2*x**4 + 3*x**2 + x
@@ -300,7 +303,7 @@ def main():
     hs = [0.1, 0.2, 0.3, 0.4]
     ejemplo_derivada(funcion, hs, 1, 2, True)
 
-    print("INTEGRACIÓN")
+    # INTEGRACIÓN
 
     print("EJEMPLO 1")
     funcion = 3*x*sym.cos(x)
@@ -344,6 +347,7 @@ def imprimir(titulo, x, y, columnas):
 
     for i in range(len(x)):
         y1, y2, y3 = y[0][i], y[1][i], y[2][i]
-        print(" {}\t{:.5f}\t{:.5f}\t{:.5f}".format(x[i], y1, y2, y3))
+        # print(" {}\t{:.5f}\t{:.5f}\t{:.5f}".format(x[i], y1, y2, y3))
+        print(" {} & {:.5f} & {:.5f} & {:.5f} \\\\".format(x[i], y1, y2, y3))
             
     print("------------------------------------------------------")

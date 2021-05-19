@@ -32,20 +32,16 @@ def analisis_derivada(funcion, a, b):
 # Análisis de los ejemplos planteados
 def main_derivada():
 
-    print("DIFERENCIACIÓN")
-
     print("EJEMPLO 1")
     funcion = 2*x**4 + 3*x**2 + x
     analisis_derivada(funcion, 0, 3)
 
     print("EJEMPLO 2")
     funcion = 3**(x + 2) + x
-    hs = [1, 2, 3, 4]
     analisis_derivada(funcion, 7, 10)
 
     print("EJEMPLO 3")
     funcion = sym.sin(2*x**3)
-    hs = [0.1, 0.2, 0.3, 0.4]
     analisis_derivada(funcion, 1, 2)
 
 

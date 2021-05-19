@@ -31,7 +31,6 @@ def analisis_integral(funcion, a, b):
 # Análisis de los ejemplos planteados
 def main_integral():
 
-    print("DIFERENCIACIÓN")
     print("EJEMPLO 1")
     funcion = 3*x*sym.cos(x)
     analisis_integral(funcion, -4.5, 3)
