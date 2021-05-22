@@ -266,8 +266,8 @@ def ejemplo_integral(funcion, n, a, b, mostrar):
         print("---------------------------------------------------")
 
         for i in range(3):
-            print(" {}\t{:.5f}\t{:.5f}\t{}".format(metodos[i], tiempos[i], errores[i], integrales[i]))
-            # print(" {} & {:.5f} & {:.5f} & {} \\\\".format(metodos[i], tiempos[i], errores[i], integrales[i]))
+            # print(" {}\t{:.5f}\t{:.5f}\t{}".format(metodos[i], tiempos[i], errores[i], integrales[i]))
+            print("\t\t{} & {:.5f} & {:.5f} & {} \\\\".format(metodos[i], tiempos[i], errores[i], integrales[i]))
 
         print("---------------------------------------------------\n")
 
@@ -349,6 +349,6 @@ def imprimir(titulo, x, y, columnas):
     for i in range(len(x)):
         y1, y2, y3 = y[0][i], y[1][i], y[2][i]
         # print(" {}\t{:.5f}\t{:.5f}\t{:.5f}".format(x[i], y1, y2, y3))
-        print(" {} & {:.5f} & {:.5f} & {:.5f} \\\\".format(x[i], y1, y2, y3))
+        print("\t\t{} & {:.5f} & {:.5f} & {:.5f} \\\\".format(x[i], y1, y2, y3))
             
     print("------------------------------------------------------")

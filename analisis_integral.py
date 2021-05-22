@@ -22,7 +22,7 @@ def analisis_integral(funcion, a, b):
     imprimir("Errores", ns, error, ["n"] + metodos)
     graficar(ns, error, colores, "Error", "n", "Error", metodos)
     for i in range(3):
-        graficar(ns, [error[i]], [colores[i]], "Error", "n", "Error", [metodos[i]])
+        graficar(ns, [error[i]], [colores[i]], "Error ("+metodos[i]+")", "n", "Error", [metodos[i]])
 
     imprimir("Tiempos", ns, tiempo, ["n"] + metodos)
     graficar(ns, tiempo, colores, "Tiempo", "n", "Tiempo", metodos)
