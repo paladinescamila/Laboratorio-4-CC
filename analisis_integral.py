@@ -44,4 +44,4 @@ def main_integral():
     analisis_integral(funcion, -18.5, -10)
 
 
-# main_integral()
+main_integral()

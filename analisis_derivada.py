@@ -45,4 +45,4 @@ def main_derivada():
     analisis_derivada(funcion, 1, 2)
 
 
-# main_derivada()
+main_derivada()
